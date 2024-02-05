@@ -1,7 +1,11 @@
+import GamePage from "./components/GamePage";
+
 function App() {
   return (
     <>
-      <div>tester</div>
+      <div className="w-full bg-zinc-100 min-h-full">
+        <GamePage />
+      </div>
     </>
   );
 }
