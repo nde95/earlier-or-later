@@ -22,13 +22,13 @@ const GamePage = () => {
       <div className="flex justify-center gap-10 items-center">
         {/* Buttons container */}
         <div>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-[#84A59D] hover:bg-[#617B74] text-white font-bold py-2 px-4 rounded">
             Earlier
           </button>
         </div>
         <p>Or</p>
         <div>
-          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-[#F28482] hover:bg-[#A35453] text-white font-bold py-2 px-4 rounded">
             Later
           </button>
         </div>

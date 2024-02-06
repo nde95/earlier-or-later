@@ -5,7 +5,7 @@ const CurrentImage = () => {
     <div className="max-w-sm rounded overflow-hidden shadow-lg relative">
       {ImageData.slice(0, 1).map((image, index) => (
         <div key={index} className="relative">
-          <div className="bg-yellow-100 rounded-md text-xs text-center p-2">
+          <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2">
             {image.title} by {image.realName}
           </div>
           <div className="-mt-1">
