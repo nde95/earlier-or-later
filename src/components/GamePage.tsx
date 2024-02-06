@@ -5,7 +5,18 @@ const GamePage = () => {
     <div className="container px-10 my-auto flex flex-col items-center justify-between min-w-full h-screen">
       {/* Score */}
       <div className="w-full">
-        <div className="flex justify-end">Score: 1000 points</div>
+        <div className="flex text-xs justify-center md:text-sm md:justify-end">
+          High Score: 1000 points
+        </div>
+        <div className="flex text-xs justify-center md:text-sm md:justify-end">
+          Profile Avatar / Name
+        </div>
+      </div>
+
+      {/* Current Score Streak */}
+
+      <div>
+        <h1>Score: 1000</h1>
       </div>
 
       {/* Image container */}
