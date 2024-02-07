@@ -5,6 +5,7 @@ module.exports = {
     extend: {},
     fontFamily: {
       Sora: ["Sora", "sans-serif"],
+      Poppins: ["Poppins", "sans-serif"],
     },
     plugins: [],
   },

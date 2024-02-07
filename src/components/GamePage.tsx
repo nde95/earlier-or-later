@@ -5,10 +5,10 @@ const GamePage = () => {
     <div className="container px-10 my-auto flex flex-col items-center justify-between min-w-full h-screen">
       {/* Score */}
       <div className="w-full">
-        <div className="flex text-xs justify-center md:text-sm md:justify-end">
+        <div className="flex text-xs justify-center md:text-sm md:justify-end font-Poppins">
           High Score: 1000 points
         </div>
-        <div className="flex text-xs justify-center md:text-sm md:justify-end">
+        <div className="flex text-xs justify-center md:text-sm md:justify-end font-Poppins">
           Profile Avatar / Name
         </div>
       </div>
@@ -16,7 +16,7 @@ const GamePage = () => {
       {/* Current Score Streak */}
 
       <div>
-        <h1>Score: 1000</h1>
+        <h1 className="font-Poppins">Score: 1000</h1>
       </div>
 
       {/* Image container */}
