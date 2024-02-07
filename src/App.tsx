@@ -1,12 +1,11 @@
 import GamePage from "./components/GamePage";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <div className="w-full bg-[#F7EDE2] min-h-full">
-        <GamePage />
-      </div>
-    </>
+    <Routes>
+      <Route path="/" element={<GamePage />} />
+    </Routes>
   );
 }
 
