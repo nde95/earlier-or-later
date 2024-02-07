@@ -1,4 +1,4 @@
-import { CurrentImage, NextImage } from "./ImageContainers";
+import { CurrentImage, NextImage } from "../ImageContainers";
 
 const GamePage = () => {
   return (
