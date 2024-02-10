@@ -1,6 +1,9 @@
+import { useImageContext } from "../../context/ImageContext";
 import { CurrentImage, NextImage } from "../ImageContainers";
 
 const GamePage = () => {
+  const { handleGuess } = useImageContext();
+
   return (
     <div className="container px-10 my-auto flex flex-col items-center justify-between min-w-full h-screen">
       {/* Score */}
@@ -33,13 +36,17 @@ const GamePage = () => {
       <div className="flex justify-center gap-10 items-center">
         {/* Buttons container */}
         <div>
-          <button className="bg-[#84A59D] hover:bg-[#617B74] text-white font-bold py-2 px-4 rounded">
+          <button
+            className="bg-[#84A59D] hover:bg-[#617B74] text-white font-bold py-2 px-4 rounded"
+            onClick={() => handleGuess("earlier")}>
             Earlier
           </button>
         </div>
         <p>Or</p>
         <div>
-          <button className="bg-[#F28482] hover:bg-[#A35453] text-white font-bold py-2 px-4 rounded">
+          <button
+            onClick={() => handleGuess("later")}
+            className="bg-[#F28482] hover:bg-[#A35453] text-white font-bold py-2 px-4 rounded">
             Later
           </button>
         </div>

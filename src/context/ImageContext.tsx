@@ -21,9 +21,7 @@ interface ImageContextType {
   usedImages: Image[];
   setUsedImages: (images: Image[]) => void;
   clearImages: () => void;
-  isCorrect: boolean;
-  setIsCorrect: (isCorrect: boolean) => void;
-  handleGuess: (isCorrect: boolean) => void;
+  handleGuess: (guessType: string) => void;
 }
 
 interface ImageProviderProps {
@@ -35,19 +33,33 @@ const ImageContext = createContext<ImageContextType | undefined>(undefined);
 export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
   const [newImages, setNewImages] = useState<Image[]>([]);
   const [usedImages, setUsedImages] = useState<Image[]>([]);
-  const [isCorrect, setIsCorrect] = useState<boolean>(false);
 
   const clearImages = () => {
     setNewImages([]);
     setUsedImages([]);
   };
 
-  const handleGuess = (isCorrect: boolean) => {
-    if (isCorrect && newImages.length > 0) {
-      const newUsedImage = newImages[0];
-      setUsedImages(prevUsedImages => [newUsedImage, ...prevUsedImages]);
+  const handleGuess = (guessType: string) => {
+    const currentImage = usedImages[0];
+    const nextImage = newImages[0];
+
+    if (
+      guessType === "earlier" &&
+      nextImage.takenDate < currentImage.takenDate
+    ) {
+      // implement score logic
+      setUsedImages(prevUsedImages => [nextImage, ...prevUsedImages]);
       setNewImages(prevNewImages => prevNewImages.slice(1));
-      setIsCorrect(false);
+    } else if (
+      guessType === "later" &&
+      nextImage.takenDate > currentImage.takenDate
+    ) {
+      // implement score logic
+      setUsedImages(prevUsedImages => [nextImage, ...prevUsedImages]);
+      setNewImages(prevNewImages => prevNewImages.slice(1));
+    } else {
+      // Incorrect guess
+      alert("You guessed wrong! Try again!");
     }
   };
 
@@ -59,8 +71,6 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
         newImages,
         setNewImages,
         clearImages,
-        isCorrect,
-        setIsCorrect,
         handleGuess,
       }}>
       {children}
