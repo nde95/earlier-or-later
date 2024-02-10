@@ -2,7 +2,7 @@ import { useImageContext } from "../../context/ImageContext";
 
 const CurrentImage = () => {
   const { usedImages } = useImageContext();
-  const lastImage = usedImages[usedImages.length - 1];
+  const lastImage = usedImages[0];
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg relative">
