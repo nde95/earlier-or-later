@@ -6,8 +6,7 @@ import { useEffect } from "react";
 import { useImageContext } from "./context/ImageContext";
 
 function App() {
-  const { newImages, setNewImages, usedImages, setUsedImages } =
-    useImageContext();
+  const { setNewImages, setUsedImages } = useImageContext();
 
   useEffect(() => {
     fetch("http://localhost:3001/getphotos")
@@ -24,11 +23,6 @@ function App() {
         console.error("Error fetching images:", error);
       });
   }, []);
-
-  useEffect(() => {
-    console.log("newImages", newImages);
-    console.log("usedImages", usedImages);
-  }, [newImages, usedImages]);
 
   return (
     <Routes>
