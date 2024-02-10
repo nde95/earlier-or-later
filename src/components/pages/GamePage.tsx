@@ -23,7 +23,7 @@ const GamePage = () => {
       </div>
 
       {/* Image container */}
-      <div className="flex flex-col md:flex-row w-full md:justify-evenly items-center">
+      <div className="flex flex-col md:flex-row w-full md:justify-evenly items-center md:w-[900px] md:h-[400px]">
         <div className="mb-4 md:mb-0">
           <CurrentImage />
         </div>
