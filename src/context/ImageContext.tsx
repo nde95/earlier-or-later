@@ -1,17 +1,18 @@
 import { createContext, useContext, useState } from "react";
 
 interface Image {
-  _id: String;
-  userId: String;
+  _id: string;
+  userId: string;
+  imageId: string;
   takenDate: Date;
-  username: String;
-  realName: String;
-  title: String;
-  format: String;
-  picSecret: String;
-  url: String;
-  pageType: String;
-  serverId: String;
+  username: string;
+  realName: string;
+  title: string;
+  format: string;
+  picSecret: string;
+  url: string;
+  pageType: string;
+  serverId: string;
 }
 
 interface ImageContextType {
@@ -22,6 +23,7 @@ interface ImageContextType {
   clearImages: () => void;
   isCorrect: boolean;
   setIsCorrect: (isCorrect: boolean) => void;
+  handleGuess: (isCorrect: boolean) => void;
 }
 
 interface ImageProviderProps {
@@ -45,6 +47,7 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
       const newUsedImage = newImages[0];
       setUsedImages(prevUsedImages => [newUsedImage, ...prevUsedImages]);
       setNewImages(prevNewImages => prevNewImages.slice(1));
+      setIsCorrect(false);
     }
   };
 
@@ -58,6 +61,7 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
         clearImages,
         isCorrect,
         setIsCorrect,
+        handleGuess,
       }}>
       {children}
     </ImageContext.Provider>
