@@ -9,7 +9,7 @@ const NextImage = () => {
     <div className="max-w-sm rounded overflow-hidden shadow-lg relative">
       <AnimatePresence mode="wait">
         <motion.div
-          key={comparisonImage.imageId}
+          key={comparisonImage._id}
           className="relative"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -18,13 +18,14 @@ const NextImage = () => {
           <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2">
             {comparisonImage.title} by {comparisonImage.realName}
           </div>
-          <div className="-mt-1">
+          <div className="-mt-1 flex items-center justify-center h-64 overflow-hidden">
             <img
-              src={`https://live.staticflickr.com/${comparisonImage.serverId}/${comparisonImage.imageId}_${comparisonImage.picSecret}_b.jpg`}
+              src={`https://live.staticflickr.com/${comparisonImage.serverId}/${comparisonImage._id}_${comparisonImage.picSecret}_b.jpg`}
               alt={comparisonImage.title}
-              className="w-full h-auto"
+              className="object-cover"
             />
           </div>
+
           <div className="absolute bottom-0 right-0 mb-2 mr-2">
             <div className="bg-gray-100 rounded text-xs px-2 py-1 opacity-25 hover:opacity-100 transition duration-300">
               <a
