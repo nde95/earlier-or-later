@@ -9,7 +9,7 @@ function App() {
   const { setNewImages, setUsedImages } = useImageContext();
 
   useEffect(() => {
-    fetch("http://localhost:3001/getphotos")
+    fetch("http://localhost:3001/getrandomphotos")
       .then(res => res.json())
       .then(data => {
         setNewImages(data);
