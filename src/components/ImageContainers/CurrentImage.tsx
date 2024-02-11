@@ -4,12 +4,13 @@ import { useImageContext } from "../../context/ImageContext";
 const CurrentImage = () => {
   const { usedImages } = useImageContext();
   const lastImage = usedImages[0];
+  const trimmedDate = lastImage.takenDate.toString().substring(0, 10);
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg relative">
       <AnimatePresence mode="wait">
         <motion.div
-          key={lastImage.imageId}
+          key={lastImage._id}
           className="relative"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -18,12 +19,17 @@ const CurrentImage = () => {
           <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2">
             {lastImage.title} by {lastImage.realName}
           </div>
-          <div className="-mt-1">
+          <div className="-mt-1 flex items-center justify-center h-64 overflow-hidden">
             <img
-              src={`https://live.staticflickr.com/${lastImage.serverId}/${lastImage.imageId}_${lastImage.picSecret}_b.jpg`}
+              src={`https://live.staticflickr.com/${lastImage.serverId}/${lastImage._id}_${lastImage.picSecret}_b.jpg`}
               alt={lastImage.title}
-              className="w-full h-auto"
+              className="object-cover"
             />
+          </div>
+          <div
+            className="absolute bottom-0 left-0 p-2 text-center rounded-md bg-gray-800 text-white opacity-75"
+            style={{ fontSize: "0.8rem" }}>
+            Taken on: {trimmedDate}
           </div>
           <div className="absolute bottom-0 right-0 mb-2 mr-2">
             <div className="bg-gray-100 rounded text-xs px-2 py-1 opacity-25 hover:opacity-100 transition duration-300">
