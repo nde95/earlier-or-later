@@ -1,10 +1,23 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useImageContext } from "../../context/ImageContext";
+import ImageModal from "../Modals/ImageModal";
+import { useState } from "react";
 
 const CurrentImage = () => {
   const { usedImages } = useImageContext();
   const lastImage = usedImages[0];
   const trimmedDate = lastImage.takenDate.toString().substring(0, 10);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImageSrc, setSelectedImageSrc] = useState(null);
+
+  const handleImageClick = (imageSrc: any) => {
+    setSelectedImageSrc(imageSrc);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg relative">
@@ -19,15 +32,21 @@ const CurrentImage = () => {
           <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2">
             {lastImage.title} by {lastImage.realName}
           </div>
-          <div className="-mt-1 flex items-center justify-center h-64 overflow-hidden">
+          <div
+            className="-mt-1 flex items-center justify-center h-64 overflow-hidden"
+            onClick={() =>
+              handleImageClick(
+                `https://live.staticflickr.com/${lastImage.serverId}/${lastImage._id}_${lastImage.picSecret}_b.jpg`
+              )
+            }>
             <img
               src={`https://live.staticflickr.com/${lastImage.serverId}/${lastImage._id}_${lastImage.picSecret}_b.jpg`}
               alt={lastImage.title}
-              className="object-cover"
+              className="object-cover cursor-pointer"
             />
           </div>
           <div
-            className="absolute bottom-0 left-0 p-2 text-center rounded-md bg-gray-800 text-white opacity-75"
+            className="-mb-1 absolute bottom-0 left-0 p-2 text-center rounded-md bg-gray-800 text-white opacity-75"
             style={{ fontSize: "0.8rem" }}>
             Taken on: {trimmedDate}
           </div>
@@ -44,6 +63,11 @@ const CurrentImage = () => {
           </div>
         </motion.div>
       </AnimatePresence>
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        src={selectedImageSrc}
+      />
     </div>
   );
 };

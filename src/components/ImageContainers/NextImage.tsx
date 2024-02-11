@@ -1,9 +1,22 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useImageContext } from "../../context/ImageContext";
+import { useState } from "react";
+import ImageModal from "../Modals/ImageModal";
 
 const NextImage = () => {
   const { newImages } = useImageContext();
   const comparisonImage = newImages[0];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImageSrc, setSelectedImageSrc] = useState(null);
+
+  const handleImageClick = (imageSrc: any) => {
+    setSelectedImageSrc(imageSrc);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg relative">
@@ -18,11 +31,17 @@ const NextImage = () => {
           <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2">
             {comparisonImage.title} by {comparisonImage.realName}
           </div>
-          <div className="-mt-1 flex items-center justify-center h-64 overflow-hidden">
+          <div
+            className="-mt-1 flex items-center justify-center h-64 overflow-hidden"
+            onClick={() =>
+              handleImageClick(
+                `https://live.staticflickr.com/${comparisonImage.serverId}/${comparisonImage._id}_${comparisonImage.picSecret}_b.jpg`
+              )
+            }>
             <img
               src={`https://live.staticflickr.com/${comparisonImage.serverId}/${comparisonImage._id}_${comparisonImage.picSecret}_b.jpg`}
               alt={comparisonImage.title}
-              className="object-cover"
+              className="object-cover cursor-pointer"
             />
           </div>
 
@@ -39,6 +58,11 @@ const NextImage = () => {
           </div>
         </motion.div>
       </AnimatePresence>
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        src={selectedImageSrc}
+      />
     </div>
   );
 };
