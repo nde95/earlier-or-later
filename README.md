@@ -1,6 +1,6 @@
 # Earlier or Later Game
 
-![Game Screenshot](/path/to/screenshot.png)
+![Game Screenshot](https://imgur.com/nwC3c9d.png)
 
 ## Description
 
