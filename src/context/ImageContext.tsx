@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 
 interface Image {
   _id: string;
@@ -18,9 +18,10 @@ interface Image {
 interface ImageContextType {
   newImages: Image[];
   setNewImages: React.Dispatch<React.SetStateAction<Image[]>>;
-  usedImages: Image[];
-  setUsedImages: React.Dispatch<React.SetStateAction<Image[]>>;
+  currentImage: Image[];
+  setCurrentImage: React.Dispatch<React.SetStateAction<Image[]>>;
   clearImages: () => void;
+  usedImageIds: React.MutableRefObject<Set<string>>;
 }
 
 interface ImageProviderProps {
@@ -31,21 +32,24 @@ const ImageContext = createContext<ImageContextType | undefined>(undefined);
 
 export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
   const [newImages, setNewImages] = useState<Image[]>([]);
-  const [usedImages, setUsedImages] = useState<Image[]>([]);
+  const [currentImage, setCurrentImage] = useState<Image[]>([]);
+  const usedImageIds = useRef(new Set<string>());
 
   const clearImages = () => {
     setNewImages([]);
-    setUsedImages([]);
+    setCurrentImage([]);
+    usedImageIds.current.clear();
   };
 
   return (
     <ImageContext.Provider
       value={{
-        usedImages,
-        setUsedImages,
+        currentImage,
+        setCurrentImage,
         newImages,
         setNewImages,
         clearImages,
+        usedImageIds,
       }}>
       {children}
     </ImageContext.Provider>
