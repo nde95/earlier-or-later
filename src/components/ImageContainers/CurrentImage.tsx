@@ -4,9 +4,8 @@ import ImageModal from "../Modals/ImageModal";
 import { useState } from "react";
 
 const CurrentImage = () => {
-  const { usedImages } = useImageContext();
-  const lastImage = usedImages[0];
-  const trimmedDate = lastImage.takenDate.toString().substring(0, 10);
+  const { currentImage } = useImageContext();
+  const trimmedDate = currentImage[0].takenDate.toString().substring(0, 10);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageSrc, setSelectedImageSrc] = useState(null);
 
@@ -23,25 +22,25 @@ const CurrentImage = () => {
     <div className="max-w-sm rounded overflow-hidden shadow-lg relative">
       <AnimatePresence mode="wait">
         <motion.div
-          key={lastImage._id}
+          key={currentImage[0]._id}
           className="relative"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}>
           <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2">
-            {lastImage.title} by {lastImage.realName}
+            {currentImage[0].title} by {currentImage[0].realName}
           </div>
           <div
             className="-mt-1 flex items-center justify-center h-64 overflow-hidden"
             onClick={() =>
               handleImageClick(
-                `https://live.staticflickr.com/${lastImage.serverId}/${lastImage._id}_${lastImage.picSecret}_b.jpg`
+                `https://live.staticflickr.com/${currentImage[0].serverId}/${currentImage[0]._id}_${currentImage[0].picSecret}_b.jpg`
               )
             }>
             <img
-              src={`https://live.staticflickr.com/${lastImage.serverId}/${lastImage._id}_${lastImage.picSecret}_b.jpg`}
-              alt={lastImage.title}
+              src={`https://live.staticflickr.com/${currentImage[0].serverId}/${currentImage[0]._id}_${currentImage[0].picSecret}_b.jpg`}
+              alt={currentImage[0].title}
               className="object-cover cursor-pointer"
             />
           </div>
@@ -53,7 +52,7 @@ const CurrentImage = () => {
           <div className="absolute bottom-0 right-0 mb-2 mr-2">
             <div className="bg-gray-100 rounded text-xs px-2 py-1 opacity-25 hover:opacity-100 transition duration-300">
               <a
-                href={lastImage.url}
+                href={currentImage[0].url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-500 hover:underline">

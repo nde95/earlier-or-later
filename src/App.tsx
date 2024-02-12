@@ -6,23 +6,40 @@ import { useEffect } from "react";
 import { useImageContext } from "./context/ImageContext";
 
 function App() {
-  const { setNewImages, setUsedImages } = useImageContext();
+  const {
+    setNewImages,
+    setCurrentImage,
+    newImages,
+    currentImage,
+    usedImageIds,
+  } = useImageContext();
 
   useEffect(() => {
-    fetch("http://localhost:3001/getrandomphotos")
-      .then(res => res.json())
-      .then(data => {
+    const fetchDefaultImages = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/getrandomphotos");
+        const data = await response.json();
         setNewImages(data);
         if (data.length > 0) {
-          setUsedImages([data[data.length - 1]]);
+          data.forEach((image: any) => {
+            usedImageIds.current.add(image._id);
+          });
+          setCurrentImage([data[data.length - 1]]);
           // @ts-ignore
           setNewImages(prevImages => prevImages.slice(0, -1));
         }
-      })
-      .catch(error => {
+      } catch (error) {
         console.error("Error fetching images:", error);
-      });
+      }
+    };
+    fetchDefaultImages();
   }, []);
+
+  useEffect(() => {
+    console.log("New images:", newImages);
+    console.log("Used images:", currentImage);
+    console.log("Used image ids:", usedImageIds.current);
+  }, [usedImageIds, newImages, currentImage]);
 
   return (
     <Routes>

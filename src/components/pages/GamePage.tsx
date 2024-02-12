@@ -2,35 +2,32 @@ import { useState } from "react";
 import { useImageContext } from "../../context/ImageContext";
 import { CurrentImage, NextImage } from "../ImageContainers";
 
-interface GamePageProps {
-  handleGuess: (guessType: string) => void;
-}
-
-const GamePage: React.FC<GamePageProps> = () => {
-  const { newImages, setNewImages, usedImages, setUsedImages } =
+const GamePage = () => {
+  const { newImages, setNewImages, currentImage, setCurrentImage } =
     useImageContext();
   const [userScore, setUserScore] = useState(0);
 
   const handleGuess = (guessType: string) => {
-    const currentImage = usedImages[0];
     const nextImage = newImages[0];
 
+    // add a check for how many images are left, if 5, fetch more images
+    // check the images first to see if they're used already, if they arent in either array, keep them if not trash them
+    // also need to check if the user has a high score, if they do, update it
+    // player probably shouldn't be able to finish the database collection, but probably should have a way to end the game
+    // that kind of defeats the idea of a high score though, so maybe not
+
     if (
-      guessType === "earlier" &&
-      nextImage.takenDate < currentImage.takenDate
+      (guessType === "earlier" &&
+        nextImage.takenDate < currentImage[0].takenDate) ||
+      (guessType === "later" && nextImage.takenDate > currentImage[0].takenDate)
     ) {
-      setUserScore(userScore + 100);
-      setUsedImages(prevUsedImages => [nextImage, ...prevUsedImages]);
-      setNewImages(prevNewImages => prevNewImages.slice(1));
-    } else if (
-      guessType === "later" &&
-      nextImage.takenDate > currentImage.takenDate
-    ) {
-      setUserScore(userScore + 100);
-      setUsedImages(prevUsedImages => [nextImage, ...prevUsedImages]);
+      setUserScore(prevScore => prevScore + 100);
+      setCurrentImage(() => [nextImage]);
       setNewImages(prevNewImages => prevNewImages.slice(1));
     } else {
       // Incorrect guess, ping the user model to update high score if applicable
+      // also end the game, need game over state to implement that
+      // also need a solution to make better alerts
       alert("You guessed wrong! Try again!");
     }
   };
