@@ -1,6 +1,6 @@
 # Earlier or Later Game
 
-![Game Screenshot](https://imgur.com/nwC3c9d.png)
+![Game Screenshot](https://imgur.com/je047Ys.png)
 
 ## Description
 
