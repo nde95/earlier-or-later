@@ -1,8 +1,39 @@
+import { useState } from "react";
 import { useImageContext } from "../../context/ImageContext";
 import { CurrentImage, NextImage } from "../ImageContainers";
 
-const GamePage = () => {
-  const { handleGuess } = useImageContext();
+interface GamePageProps {
+  handleGuess: (guessType: string) => void;
+}
+
+const GamePage: React.FC<GamePageProps> = () => {
+  const { newImages, setNewImages, usedImages, setUsedImages } =
+    useImageContext();
+  const [userScore, setUserScore] = useState(0);
+
+  const handleGuess = (guessType: string) => {
+    const currentImage = usedImages[0];
+    const nextImage = newImages[0];
+
+    if (
+      guessType === "earlier" &&
+      nextImage.takenDate < currentImage.takenDate
+    ) {
+      setUserScore(userScore + 100);
+      setUsedImages(prevUsedImages => [nextImage, ...prevUsedImages]);
+      setNewImages(prevNewImages => prevNewImages.slice(1));
+    } else if (
+      guessType === "later" &&
+      nextImage.takenDate > currentImage.takenDate
+    ) {
+      setUserScore(userScore + 100);
+      setUsedImages(prevUsedImages => [nextImage, ...prevUsedImages]);
+      setNewImages(prevNewImages => prevNewImages.slice(1));
+    } else {
+      // Incorrect guess, ping the user model to update high score if applicable
+      alert("You guessed wrong! Try again!");
+    }
+  };
 
   return (
     <div className="container px-10 my-auto flex flex-col items-center justify-between min-w-full h-screen">
@@ -19,7 +50,7 @@ const GamePage = () => {
       {/* Current Score Streak */}
 
       <div>
-        <h1 className="font-Poppins">Score: 1000</h1>
+        <h1 className="font-Poppins">Score: {userScore}</h1>
       </div>
 
       {/* Image container */}

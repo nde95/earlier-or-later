@@ -17,11 +17,10 @@ interface Image {
 
 interface ImageContextType {
   newImages: Image[];
-  setNewImages: (images: Image[]) => void;
+  setNewImages: React.Dispatch<React.SetStateAction<Image[]>>;
   usedImages: Image[];
-  setUsedImages: (images: Image[]) => void;
+  setUsedImages: React.Dispatch<React.SetStateAction<Image[]>>;
   clearImages: () => void;
-  handleGuess: (guessType: string) => void;
 }
 
 interface ImageProviderProps {
@@ -39,30 +38,6 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
     setUsedImages([]);
   };
 
-  const handleGuess = (guessType: string) => {
-    const currentImage = usedImages[0];
-    const nextImage = newImages[0];
-
-    if (
-      guessType === "earlier" &&
-      nextImage.takenDate < currentImage.takenDate
-    ) {
-      // implement score logic
-      setUsedImages(prevUsedImages => [nextImage, ...prevUsedImages]);
-      setNewImages(prevNewImages => prevNewImages.slice(1));
-    } else if (
-      guessType === "later" &&
-      nextImage.takenDate > currentImage.takenDate
-    ) {
-      // implement score logic
-      setUsedImages(prevUsedImages => [nextImage, ...prevUsedImages]);
-      setNewImages(prevNewImages => prevNewImages.slice(1));
-    } else {
-      // Incorrect guess
-      alert("You guessed wrong! Try again!");
-    }
-  };
-
   return (
     <ImageContext.Provider
       value={{
@@ -71,7 +46,6 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
         newImages,
         setNewImages,
         clearImages,
-        handleGuess,
       }}>
       {children}
     </ImageContext.Provider>
