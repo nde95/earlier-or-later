@@ -1,11 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useImageContext } from "../../context/ImageContext";
 import { CurrentImage, NextImage } from "../ImageContainers";
+import SkeletonContainer from "../Skeleton/SkeletonImageContainer";
 
 const GamePage = () => {
-  const { newImages, setNewImages, currentImage, setCurrentImage } =
-    useImageContext();
+  const {
+    newImages,
+    setNewImages,
+    currentImage,
+    setCurrentImage,
+    usedImageIds,
+  } = useImageContext();
   const [userScore, setUserScore] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDefaultImages = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/getrandomphotos");
+        const data = await response.json();
+        const imageSlice = data.length - 1;
+        setNewImages(data.slice(0, imageSlice));
+        setCurrentImage([data[data.length - 1]]);
+
+        data.forEach((image: any) => {
+          usedImageIds.current.add(image._id);
+        });
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+    fetchDefaultImages();
+  }, []);
 
   const handleGuess = (guessType: string) => {
     const nextImage = newImages[0];
@@ -53,11 +80,9 @@ const GamePage = () => {
       {/* Image container */}
       <div className="flex flex-col md:flex-row w-full md:justify-evenly items-center md:w-[900px] md:h-[400px]">
         <div className="mb-4 md:mb-0">
-          <CurrentImage />
+          {isLoading ? <SkeletonContainer /> : <CurrentImage />}
         </div>
-        <div>
-          <NextImage />
-        </div>
+        <div>{isLoading ? <SkeletonContainer /> : <NextImage />}</div>
       </div>
 
       {/* Buttons container*/}
