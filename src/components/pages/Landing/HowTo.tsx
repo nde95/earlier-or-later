@@ -15,7 +15,7 @@ const HowTo = () => {
         </li>
         <li className="mb-4 flex items-center justify-center">
           <img
-            src="/public/tutorial.jpg"
+            src="/public/tutorial.PNG"
             alt="tutorial image"
             width={500}
             height={300}
@@ -33,8 +33,8 @@ const HowTo = () => {
           the original upload on Flickr, so click it and give them some love!
         </li>
         <li className="mb-4">
-          User accounts are optional, but creating one will allow you to store
-          your high score and compete on the leaderboard.
+          If an image is too small, you can click on it to see a larger version
+          for better inspection.
         </li>
       </ul>
       <p className="mb-4">Enjoy the game and have fun!</p>
