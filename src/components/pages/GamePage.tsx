@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useImageContext } from "../../context/ImageContext";
 import { CurrentImage, NextImage } from "../ImageContainers";
-import SkeletonContainer from "../Skeleton/SkeletonImageContainer";
+import SkeletonImageContainer from "../Skeleton/SkeletonImageContainer";
 
 const GamePage = () => {
   const {
@@ -12,7 +12,7 @@ const GamePage = () => {
     usedImageIds,
   } = useImageContext();
   const [userScore, setUserScore] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isMounting, setIsMounting] = useState(true);
 
   useEffect(() => {
     const fetchDefaultImages = async () => {
@@ -26,7 +26,7 @@ const GamePage = () => {
         data.forEach((image: any) => {
           usedImageIds.current.add(image._id);
         });
-        setIsLoading(false);
+        setIsMounting(false);
       } catch (error) {
         console.error("Error fetching images:", error);
       }
@@ -80,9 +80,10 @@ const GamePage = () => {
       {/* Image container */}
       <div className="flex flex-col md:flex-row w-full md:justify-evenly items-center md:w-[900px] md:h-[400px]">
         <div className="mb-4 md:mb-0">
-          {isLoading ? <SkeletonContainer /> : <CurrentImage />}
+          {isMounting ? <SkeletonImageContainer /> : <CurrentImage />}
         </div>
-        <div>{isLoading ? <SkeletonContainer /> : <NextImage />}</div>
+
+        <div>{isMounting ? <SkeletonImageContainer /> : <NextImage />}</div>
       </div>
 
       {/* Buttons container*/}

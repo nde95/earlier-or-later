@@ -19,7 +19,7 @@ const NextImage = () => {
   };
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg relative">
+    <div className="max-w-sm rounded overflow-hidden shadow-lg relative font-Nunito">
       <AnimatePresence mode="wait">
         <motion.div
           key={comparisonImage._id}

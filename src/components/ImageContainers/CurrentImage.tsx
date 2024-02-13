@@ -28,7 +28,7 @@ const CurrentImage = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}>
-          <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2">
+          <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2 font-Nunito">
             {currentImage[0].title} by {currentImage[0].realName}
           </div>
           <div

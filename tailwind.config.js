@@ -6,6 +6,7 @@ module.exports = {
     fontFamily: {
       Sora: ["Sora", "sans-serif"],
       Poppins: ["Poppins", "sans-serif"],
+      Nunito: ["Nunito Sans", "sans-serif"],
     },
     plugins: [],
   },
