@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useImageContext } from "../../context/ImageContext";
 import { CurrentImage, NextImage } from "../ImageContainers";
 import SkeletonImageContainer from "../Skeleton/SkeletonImageContainer";
+import { ClipLoader } from "react-spinners";
 
 const GamePage = () => {
   const {
@@ -10,9 +11,11 @@ const GamePage = () => {
     currentImage,
     setCurrentImage,
     usedImageIds,
+    fetchMoreImages,
   } = useImageContext();
   const [userScore, setUserScore] = useState(0);
   const [isMounting, setIsMounting] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchDefaultImages = async () => {
@@ -37,11 +40,16 @@ const GamePage = () => {
   const handleGuess = (guessType: string) => {
     const nextImage = newImages[0];
 
-    // add a check for how many images are left, if 5, fetch more images
-    // check the images first to see if they're used already, if they arent in either array, keep them if not trash them
     // also need to check if the user has a high score, if they do, update it
     // player probably shouldn't be able to finish the database collection, but probably should have a way to end the game
     // that kind of defeats the idea of a high score though, so maybe not
+
+    if (newImages.length < 5) {
+      // this works but doesn't fetch at 5 images, seems to hit around 3
+      setIsLoading(true);
+      fetchMoreImages();
+      setIsLoading(false);
+    }
 
     if (
       (guessType === "earlier" &&
@@ -61,6 +69,11 @@ const GamePage = () => {
 
   return (
     <div className="container px-10 my-auto flex flex-col items-center justify-between min-w-full h-screen">
+      {isLoading && (
+        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-white/70 z-50">
+          <ClipLoader />
+        </div>
+      )}
       {/* Score */}
       <div className="w-full">
         <div className="flex text-xs justify-center md:text-sm md:justify-end font-Poppins">
