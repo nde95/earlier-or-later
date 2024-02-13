@@ -6,13 +6,7 @@ import { useEffect } from "react";
 import { useImageContext } from "./context/ImageContext";
 
 function App() {
-  const {
-    setNewImages,
-    setCurrentImage,
-    newImages,
-    currentImage,
-    usedImageIds,
-  } = useImageContext();
+  const { newImages, currentImage, usedImageIds } = useImageContext();
 
   useEffect(() => {
     console.log("New images:", newImages);
