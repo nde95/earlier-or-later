@@ -22,6 +22,7 @@ interface ImageContextType {
   setCurrentImage: React.Dispatch<React.SetStateAction<Image[]>>;
   clearImages: () => void;
   usedImageIds: React.MutableRefObject<Set<string>>;
+  fetchMoreImages: () => Promise<void>;
 }
 
 interface ImageProviderProps {
@@ -41,6 +42,18 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
     usedImageIds.current.clear();
   };
 
+  const fetchMoreImages = async () => {
+    const response = await fetch("http://localhost:3001/getrandomphotos");
+    const data = await response.json();
+
+    data.forEach((image: Image) => {
+      if (!usedImageIds.current.has(image._id)) {
+        setNewImages(prevNewImages => [...prevNewImages, image]);
+        usedImageIds.current.add(image._id);
+      }
+    });
+  };
+
   return (
     <ImageContext.Provider
       value={{
@@ -50,6 +63,7 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
         setNewImages,
         clearImages,
         usedImageIds,
+        fetchMoreImages,
       }}>
       {children}
     </ImageContext.Provider>
