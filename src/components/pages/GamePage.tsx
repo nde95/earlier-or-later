@@ -46,8 +46,8 @@ const GamePage = () => {
     // player probably shouldn't be able to finish the database collection, but probably should have a way to end the game
     // that kind of defeats the idea of a high score though, so maybe not
 
-    if (newImages.length < 5) {
-      // this works but doesn't fetch at 5 images, seems to hit around 3
+    if (newImages.length < 6) {
+      console.log("Fetching more images...");
       setIsLoading(true);
       fetchMoreImages();
       setIsLoading(false);
