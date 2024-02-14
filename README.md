@@ -16,3 +16,6 @@
 - React Icons
 - Framer motion
 - React Router Dom
+- React Hook Form
+- React Hot Toast
+- React Spinners 
