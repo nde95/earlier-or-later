@@ -48,8 +48,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
                     max-w-lg
                     p-6
                     md:my-8
-                    md:w-full
-                    md:max-w-5xl
+                    md:w-full 
+                    md:max-w-fit
                     md:p-6
                     ">
                 <div
