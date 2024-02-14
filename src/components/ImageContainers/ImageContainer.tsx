@@ -75,7 +75,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ isCurrentImage }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}>
-            <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2">
+            <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2 font-Nunito">
               {comparisonImage.title} by {comparisonImage.realName}
             </div>
             <div
