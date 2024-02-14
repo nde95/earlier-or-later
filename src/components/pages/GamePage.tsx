@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useImageContext } from "../../context/ImageContext";
-import { CurrentImage, NextImage } from "../ImageContainers";
 import SkeletonImageContainer from "../Skeleton/SkeletonImageContainer";
 import { ClipLoader } from "react-spinners";
 import { useUserContext } from "../../context/UserContext";
+import ImageContainer from "../ImageContainers/ImageContainer";
 
 const GamePage = () => {
   const {
@@ -93,10 +93,21 @@ const GamePage = () => {
       {/* Image container */}
       <div className="flex flex-col md:flex-row w-full md:justify-evenly items-center md:w-[900px] md:h-[400px]">
         <div className="mb-4 md:mb-0">
-          {isMounting ? <SkeletonImageContainer /> : <CurrentImage />}
+          {/* current image stack */}
+          {isMounting ? (
+            <SkeletonImageContainer />
+          ) : (
+            <ImageContainer isCurrentImage={true} />
+          )}
         </div>
-
-        <div>{isMounting ? <SkeletonImageContainer /> : <NextImage />}</div>
+        <div>
+          {/* comparison image array */}
+          {isMounting ? (
+            <SkeletonImageContainer />
+          ) : (
+            <ImageContainer isCurrentImage={false} />
+          )}
+        </div>
       </div>
       {/* Buttons container*/}
       <div className="flex justify-center gap-10 items-center">
