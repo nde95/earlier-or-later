@@ -3,6 +3,7 @@ import { useImageContext } from "../../context/ImageContext";
 import { CurrentImage, NextImage } from "../ImageContainers";
 import SkeletonImageContainer from "../Skeleton/SkeletonImageContainer";
 import { ClipLoader } from "react-spinners";
+import { useUserContext } from "../../context/UserContext";
 
 const GamePage = () => {
   const {
@@ -13,7 +14,8 @@ const GamePage = () => {
     usedImageIds,
     fetchMoreImages,
   } = useImageContext();
-  const [userScore, setUserScore] = useState(0);
+  const { userScore, setUserScore } = useUserContext();
+
   const [isMounting, setIsMounting] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -69,6 +71,7 @@ const GamePage = () => {
 
   return (
     <div className="container px-10 my-auto flex flex-col items-center justify-between min-w-full h-screen">
+      {/* // loader functions as expected, but algo might be too fast to need it. */}
       {isLoading && (
         <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-white/70 z-50">
           <ClipLoader />
@@ -83,13 +86,10 @@ const GamePage = () => {
           Profile Avatar / Name
         </div>
       </div>
-
       {/* Current Score Streak */}
-
       <div>
         <h1 className="font-Poppins">Score: {userScore}</h1>
       </div>
-
       {/* Image container */}
       <div className="flex flex-col md:flex-row w-full md:justify-evenly items-center md:w-[900px] md:h-[400px]">
         <div className="mb-4 md:mb-0">
@@ -98,7 +98,6 @@ const GamePage = () => {
 
         <div>{isMounting ? <SkeletonImageContainer /> : <NextImage />}</div>
       </div>
-
       {/* Buttons container*/}
       <div className="flex justify-center gap-10 items-center">
         {/* Buttons container */}
