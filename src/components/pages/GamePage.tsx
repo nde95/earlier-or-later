@@ -4,7 +4,7 @@ import SkeletonImageContainer from "../Skeleton/SkeletonImageContainer";
 import { ClipLoader } from "react-spinners";
 import { useUserContext } from "../../context/UserContext";
 import ImageContainer from "../ImageContainers/ImageContainer";
-import LoginModal from "../Modals/LoginModal";
+import AuthModal from "../Modals/AuthModal";
 
 const GamePage = () => {
   const {
@@ -160,7 +160,7 @@ const GamePage = () => {
         </div>
       </div>
       <div className="py-5"></div>
-      <LoginModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <AuthModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };

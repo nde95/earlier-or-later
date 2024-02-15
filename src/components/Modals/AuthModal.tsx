@@ -3,12 +3,12 @@ import LoginForm from "../Forms/LoginForm";
 import Modal from "./Modal";
 import RegisterForm from "../Forms/RegisterForm";
 
-interface LoginModalProps {
+interface AuthModalProps {
   onClose: () => void;
   isOpen?: boolean;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
+const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [displayMode, setDisplayMode] = useState("LOGIN");
 
   const toggleDisplayMode = () => {
@@ -48,4 +48,4 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   );
 };
 
-export default LoginModal;
+export default AuthModal;
