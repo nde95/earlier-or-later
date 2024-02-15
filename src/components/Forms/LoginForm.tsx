@@ -26,9 +26,9 @@ const LoginForm = () => {
           "Content-Type": "application/json",
         },
       });
-
       if (response.ok) {
         const user = await response.json();
+        localStorage.setItem("user", JSON.stringify(user));
         setCurrentUser(user);
         toast.dismiss(pendingToastId);
         toast.success("Login successful!");
