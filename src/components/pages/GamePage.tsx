@@ -15,9 +15,9 @@ const GamePage = () => {
     usedImageIds,
     fetchMoreImages,
   } = useImageContext();
-  const { userScore, setUserScore } = useUserContext();
+  const { userScore, setUserScore, clearUser } = useUserContext();
 
-  const { currentUser } = useUserContext();
+  const { currentUser, setCurrentUser } = useUserContext();
 
   const [isMounting, setIsMounting] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +32,10 @@ const GamePage = () => {
   };
 
   useEffect(() => {
+    if (localStorage.getItem("user")) {
+      setCurrentUser(JSON.parse(localStorage.getItem("user")!));
+    }
+
     const fetchDefaultImages = async () => {
       try {
         const response = await fetch("http://localhost:3001/getrandomphotos");
@@ -52,6 +56,9 @@ const GamePage = () => {
   }, []);
 
   useEffect(() => {
+    if (localStorage.getItem("user")) {
+      console.log("joplin found within");
+    }
     console.log(currentUser);
   }, [currentUser]);
 
@@ -105,6 +112,9 @@ const GamePage = () => {
           </div>
           <div className="flex text-xs justify-center md:text-sm md:justify-end font-Poppins">
             {`High Score: ${currentUser.highScore} points`}
+          </div>
+          <div className="flex text-xs text-sky-500 cursor-pointer justify-center md:text-sm md:justify-end font-Poppins">
+            <button onClick={() => clearUser()}>Log out</button>
           </div>
         </div>
       ) : (
