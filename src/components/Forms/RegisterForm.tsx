@@ -7,7 +7,7 @@ type FormValues = {
   email: string;
   password: string;
   confirmPassword: string;
-  userScore: number;
+  highScore: number;
 };
 
 const RegisterForm = () => {
@@ -25,9 +25,9 @@ const RegisterForm = () => {
     ...data
   }) => {
     if (userScore > 0) {
-      data.userScore = userScore;
+      data.highScore = userScore;
     } else {
-      data.userScore = 0;
+      data.highScore = 0;
     }
     const pendingToastId = toast.loading("Submitting...");
     try {
