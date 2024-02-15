@@ -45,10 +45,17 @@ const RegisterForm = () => {
 
         // Show success toast
         toast.success("Registration successful!");
+      } else if (response.status === 409) {
+        toast.dismiss(pendingToastId);
+        toast.error(`Username or email already exists.`);
       } else {
-        toast.error(`An error occurred during registration:`);
+        toast.dismiss(pendingToastId);
+        toast.error(
+          `An error occurred during registration: ${response.statusText}`
+        );
       }
     } catch (error: any) {
+      toast.dismiss(pendingToastId);
       toast.error(`An error occurred during registration: ${error}`);
     }
   };
