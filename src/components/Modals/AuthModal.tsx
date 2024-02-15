@@ -18,7 +18,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="w-full h-full flex flex-col justify-center items-center px-5">
-        {displayMode === "LOGIN" ? (
+        {displayMode === "REGISTER" ? (
           <>
             <div className="font-semibold font-Poppins">
               Create a new account
