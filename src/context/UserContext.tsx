@@ -9,8 +9,8 @@ interface User {
 }
 
 interface UserContextType {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  currentUser: User | null;
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
   userScore: number;
   setUserScore: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -22,11 +22,12 @@ interface UserProviderProps {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userScore, setUserScore] = useState(0);
 
   return (
-    <UserContext.Provider value={{ user, setUser, userScore, setUserScore }}>
+    <UserContext.Provider
+      value={{ currentUser, setCurrentUser, userScore, setUserScore }}>
       {children}
     </UserContext.Provider>
   );
