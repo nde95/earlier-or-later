@@ -13,6 +13,7 @@ interface UserContextType {
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
   userScore: number;
   setUserScore: React.Dispatch<React.SetStateAction<number>>;
+  clearUser: () => void;
 }
 
 interface UserProviderProps {
@@ -25,9 +26,20 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userScore, setUserScore] = useState(0);
 
+  const clearUser = () => {
+    setCurrentUser(null);
+    localStorage.removeItem("user");
+  };
+
   return (
     <UserContext.Provider
-      value={{ currentUser, setCurrentUser, userScore, setUserScore }}>
+      value={{
+        currentUser,
+        setCurrentUser,
+        userScore,
+        setUserScore,
+        clearUser,
+      }}>
       {children}
     </UserContext.Provider>
   );
