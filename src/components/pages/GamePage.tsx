@@ -4,6 +4,7 @@ import SkeletonImageContainer from "../Skeleton/SkeletonImageContainer";
 import { ClipLoader } from "react-spinners";
 import { useUserContext } from "../../context/UserContext";
 import ImageContainer from "../ImageContainers/ImageContainer";
+import LoginModal from "../Modals/LoginModal";
 
 const GamePage = () => {
   const {
@@ -16,8 +17,19 @@ const GamePage = () => {
   } = useImageContext();
   const { userScore, setUserScore } = useUserContext();
 
+  const { currentUser } = useUserContext();
+
   const [isMounting, setIsMounting] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchDefaultImages = async () => {
@@ -38,6 +50,10 @@ const GamePage = () => {
     };
     fetchDefaultImages();
   }, []);
+
+  useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
 
   const handleGuess = (guessType: string) => {
     const nextImage = newImages[0];
@@ -81,14 +97,26 @@ const GamePage = () => {
         </div>
       )}
       {/* Score */}
-      <div className="w-full">
-        <div className="flex text-xs justify-center md:text-sm md:justify-end font-Poppins">
-          High Score: 1000 points
+
+      {currentUser ? (
+        <div className="w-full">
+          <div className="flex text-xs justify-center md:text-sm md:justify-end font-Poppins">
+            {`Hello, ${currentUser.username}!`}
+          </div>
+          <div className="flex text-xs justify-center md:text-sm md:justify-end font-Poppins">
+            {`High Score: ${currentUser.highScore} points`}
+          </div>
         </div>
-        <div className="flex text-xs justify-center md:text-sm md:justify-end font-Poppins">
-          Profile Avatar / Name
+      ) : (
+        <div className="w-full">
+          <div className="flex text-xs text-sky-500 cursor-pointer justify-center md:text-sm md:justify-end font-Poppins">
+            <button onClick={() => handleOpenModal()}>
+              Log in to your account
+            </button>
+          </div>
         </div>
-      </div>
+      )}
+
       {/* Current Score Streak */}
       <div>
         <h1 className="font-Poppins">Score: {userScore}</h1>
@@ -132,6 +160,7 @@ const GamePage = () => {
         </div>
       </div>
       <div className="py-5"></div>
+      <LoginModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };
