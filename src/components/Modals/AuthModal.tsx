@@ -6,6 +6,7 @@ import RegisterForm from "../Forms/RegisterForm";
 interface AuthModalProps {
   onClose: () => void;
   isOpen?: boolean;
+  onSuccess?: () => void;
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
@@ -15,8 +16,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     setDisplayMode(prevMode => (prevMode === "LOGIN" ? "REGISTER" : "LOGIN"));
   };
 
+  const handleAuthSuccess = () => {
+    onClose();
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} onSuccess={handleAuthSuccess}>
       <div className="w-full h-full flex flex-col justify-center items-center px-5">
         {displayMode === "REGISTER" ? (
           <>
@@ -28,7 +33,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               className="text-xs text-sky-400 mb-10 cursor-pointer font-Poppins">
               Or log in to your account
             </span>
-            <RegisterForm />
+            <RegisterForm onSuccess={handleAuthSuccess} />
           </>
         ) : (
           <>
@@ -40,7 +45,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               className="text-xs text-sky-400 mb-10 cursor-pointer font-Poppins">
               Don't have an account?
             </span>
-            <LoginForm />
+            <LoginForm onSuccess={handleAuthSuccess} />
           </>
         )}
       </div>
