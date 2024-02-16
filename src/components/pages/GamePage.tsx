@@ -55,13 +55,6 @@ const GamePage = () => {
     fetchDefaultImages();
   }, []);
 
-  useEffect(() => {
-    if (localStorage.getItem("user")) {
-      console.log("joplin found within");
-    }
-    console.log(currentUser);
-  }, [currentUser]);
-
   const handleGuess = (guessType: string) => {
     const nextImage = newImages[0];
 
@@ -70,7 +63,6 @@ const GamePage = () => {
     // that kind of defeats the idea of a high score though, so maybe not
 
     if (newImages.length < 6) {
-      console.log("Fetching more images...");
       setIsLoading(true);
       fetchMoreImages();
       setIsLoading(false);
