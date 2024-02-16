@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useUserContext } from "../../context/UserContext";
@@ -8,8 +7,12 @@ type FormValues = {
   password: string;
 };
 
-const LoginForm = () => {
-  const { currentUser, setCurrentUser } = useUserContext();
+interface LoginFormProps {
+  onSuccess: () => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
+  const { setCurrentUser } = useUserContext();
   const {
     register,
     handleSubmit,
@@ -32,6 +35,8 @@ const LoginForm = () => {
         setCurrentUser(user);
         toast.dismiss(pendingToastId);
         toast.success("Login successful!");
+        // parent component will handle the closing of the modal
+        onSuccess();
       } else {
         toast.dismiss(pendingToastId);
         toast.error("Invalid email or password");
@@ -41,10 +46,6 @@ const LoginForm = () => {
       toast.error(`An error occurred during login: ${error}`);
     }
   };
-
-  useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">

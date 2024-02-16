@@ -10,7 +10,11 @@ type FormValues = {
   highScore: number;
 };
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+  onSuccess: () => void;
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
   const {
     register,
     handleSubmit,
@@ -18,7 +22,7 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const { userScore } = useUserContext();
+  const { userScore, setCurrentUser } = useUserContext();
 
   const onSubmit: SubmitHandler<FormValues> = async ({
     confirmPassword,
@@ -40,11 +44,14 @@ const RegisterForm = () => {
       });
 
       if (response.ok) {
-        // Clear pending toast
         toast.dismiss(pendingToastId);
-
-        // Show success toast
+        // user is created, so sign them in immediately, no need to make them log in immediately after registering
+        const user = await response.json();
+        localStorage.setItem("user", JSON.stringify(user));
+        setCurrentUser(user);
         toast.success("Registration successful!");
+        // close the modal passed from the parent component
+        onSuccess();
       } else if (response.status === 409) {
         toast.dismiss(pendingToastId);
         toast.error(`Username or email already exists.`);
