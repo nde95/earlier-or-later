@@ -4,7 +4,7 @@
 
 ## Description
 
-**Earlier or Later** is a game that uses the **Flickr API** to present two images to the player. The objective is to guess whether the image on the left was taken at an earlier or later date than the one on the right. A correct guess earns the player 100 points and the compared image becomes the new active image. The game continues until the player makes an incorrect guess. High scores can be stored in an optional player account for leaderboard competition.
+**Earlier or Later** is a game inspired by [Higher or Lower](https://www.higherlowergame.com/) and [Timeguessr](https://timeguessr.com/), and powered by the **Flickr API**. The idea of the game is the player is presented with two randomly selected images, and they have to make an educated guess is the image on the right was taken **earlier** or **later** than the date given to the player on the image on the right. If the guess made was correct, you earn 100 points. However if you guess incorrectly, _the game is over_. The game supports account creation to store your high score and compete on the leaderboards. Put your knowledge to the test and give it a try.
 
 ## Packages used
 
@@ -18,4 +18,4 @@
 - React Router Dom
 - React Hook Form
 - React Hot Toast
-- React Spinners 
+- React Spinners

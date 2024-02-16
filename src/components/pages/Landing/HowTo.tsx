@@ -9,13 +9,13 @@ const HowTo = () => {
       </p>
       <ul className="list-none ml-6 mb-4">
         <li className="mb-4">
-          In this game, you are presented with two images, and you have to guess
-          if the image on the left was taken on an earlier or later date than
-          the image on the right.
+          In this game, you will be shown two images side by side (or on top of
+          each other on mobile) and you have to guess if the image on the left
+          was taken earlier or later than the image on right, like below
         </li>
         <li className="mb-4 flex items-center justify-center">
           <img
-            src="/public/tutorial.PNG"
+            src="/tutorial.PNG"
             alt="tutorial image"
             width={500}
             height={300}
@@ -23,18 +23,25 @@ const HowTo = () => {
           />
         </li>
         <li className="mb-4">
-          That can be done with the buttons at the bottom of the screen. Each
-          correct guess will earn you 100 points, while an incorrect guess will
-          end the game, so make sure you study the images carefully before you
-          guess!
+          The buttons on the bottom of the screen will allow you to make your
+          decision. Get it right, and earn 100 points, get it wrong and the game
+          is <span className="italic font-semibold">over!</span>
+        </li>
+        <li className="mb-4 flex flex-col items-center justify-center">
+          If an image is too small, give it a click and see the full size image
+          for thorough inspection.
+          <img
+            src="/tutomodal.PNG"
+            alt="tutorial image"
+            width={500}
+            height={300}
+            className="rounded-lg shadow-md"
+          />
         </li>
         <li className="mb-4">
-          If you see an image you really like, each image has a link directly to
-          the original upload on Flickr, so click it and give them some love!
-        </li>
-        <li className="mb-4">
-          If an image is too small, you can click on it to see a larger version
-          for better inspection.
+          Credit is linked directly to the source of the image on Flickr, so if
+          you see something you like, give it a click and give the photographer
+          some love!
         </li>
       </ul>
       <p className="mb-4">Enjoy the game and have fun!</p>
