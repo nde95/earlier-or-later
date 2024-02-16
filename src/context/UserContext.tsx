@@ -14,6 +14,8 @@ interface UserContextType {
   userScore: number;
   setUserScore: React.Dispatch<React.SetStateAction<number>>;
   clearUser: () => void;
+  isSubmitting: boolean;
+  setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface UserProviderProps {
@@ -25,6 +27,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userScore, setUserScore] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const clearUser = () => {
     setCurrentUser(null);
@@ -39,6 +42,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         userScore,
         setUserScore,
         clearUser,
+        isSubmitting,
+        setIsSubmitting,
       }}>
       {children}
     </UserContext.Provider>

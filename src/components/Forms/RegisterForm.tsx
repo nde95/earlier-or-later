@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useUserContext } from "../../context/UserContext";
+import { ClipLoader } from "react-spinners";
 
 type FormValues = {
   username: string;
@@ -22,7 +23,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const { userScore, setCurrentUser } = useUserContext();
+  const { userScore, setCurrentUser, isSubmitting, setIsSubmitting } =
+    useUserContext();
 
   const onSubmit: SubmitHandler<FormValues> = async ({
     confirmPassword,
@@ -34,6 +36,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
       data.highScore = 0;
     }
     const pendingToastId = toast.loading("Submitting...");
+    setIsSubmitting(true);
     try {
       const response = await fetch("http://localhost:3001/register", {
         method: "POST",
@@ -64,6 +67,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
     } catch (error: any) {
       toast.dismiss(pendingToastId);
       toast.error(`An error occurred during registration: ${error}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
   return (
@@ -126,10 +131,19 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
         )}
       </div>
 
-      <input
-        type="submit"
-        className="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-600"
-      />
+      {!isSubmitting ? (
+        <input
+          type="submit"
+          className="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-600"
+        />
+      ) : (
+        <button
+          className="px-3 text-xs bg-gray-300 rounded-md cursor-not-allowed"
+          disabled>
+          {" "}
+          <ClipLoader />{" "}
+        </button>
+      )}
     </form>
   );
 };
