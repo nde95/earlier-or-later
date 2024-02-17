@@ -4,7 +4,6 @@ import LandingPage from "./components/pages/Landing/LandingPage";
 import HowTo from "./components/pages/Landing/HowTo";
 import { useEffect } from "react";
 import { useImageContext } from "./context/ImageContext";
-import TestPage from "./components/TestPage";
 import NotFound from "./components/pages/NotFound";
 
 // TO DO
@@ -27,7 +26,6 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/game" element={<GamePage />} />
       <Route path="/howto" element={<HowTo />} />
-      <Route path="/auth" element={<TestPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
