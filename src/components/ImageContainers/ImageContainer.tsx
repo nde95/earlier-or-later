@@ -33,7 +33,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ isCurrentImage }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}>
+            transition={{ duration: 0.5 }}>
             <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2 font-Nunito">
               {currentImage[0].title} by {currentImage[0].realName}
             </div>
@@ -74,7 +74,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ isCurrentImage }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}>
+            transition={{ duration: 0.5 }}>
             <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2 font-Nunito">
               {comparisonImage.title} by {comparisonImage.realName}
             </div>
@@ -91,7 +91,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ isCurrentImage }) => {
                 className="object-cover cursor-pointer"
               />
             </div>
-
+            {/* 
             <div className="absolute bottom-0 right-0 mb-2 mr-2">
               <div className="bg-gray-100 rounded text-xs px-2 py-1 opacity-25 hover:opacity-100 transition duration-300">
                 <a
@@ -102,7 +102,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ isCurrentImage }) => {
                   Image Credits
                 </a>
               </div>
-            </div>
+            </div> */}
           </motion.div>
         )}
       </AnimatePresence>
