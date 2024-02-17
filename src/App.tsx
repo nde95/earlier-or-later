@@ -1,4 +1,4 @@
-import GamePage from "./components/pages/GamePage";
+import GamePage from "./components/pages/Game/GamePage";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./components/pages/Landing/LandingPage";
 import HowTo from "./components/pages/Landing/HowTo";
