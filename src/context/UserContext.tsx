@@ -6,6 +6,7 @@ interface User {
   password: string;
   _id: string;
   highScore: number;
+  accessToken: string;
 }
 
 interface UserContextType {
@@ -16,6 +17,7 @@ interface UserContextType {
   clearUser: () => void;
   isSubmitting: boolean;
   setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
+  updateUserScore: (highScore: number) => void;
 }
 
 interface UserProviderProps {
@@ -34,6 +36,54 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     localStorage.removeItem("user");
   };
 
+  const updateUserScore = async (highScore: number) => {
+    try {
+      const response = await fetch(`http://localhost:3001/updatehighscore`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Bearer: `Bearer ${currentUser?.accessToken}`,
+        },
+        body: JSON.stringify({
+          username: currentUser?.username,
+          highScore: highScore,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update user score");
+      }
+
+      const data = await response.json();
+      const updatedHighScore = data.highScore;
+
+      const storedUser = localStorage.getItem("user");
+
+      if (storedUser) {
+        // Parse the stored user object if it exists
+        const user = JSON.parse(storedUser);
+
+        // Create a new object with the updated highScore and spread the rest of the properties
+        const updatedUser = {
+          ...user,
+          highScore: updatedHighScore,
+        };
+
+        // Store the updated user model in localStorage
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+
+        if (currentUser) {
+          currentUser.highScore = updatedHighScore;
+          setCurrentUser(currentUser); // Assuming setCurrentUser updates your state
+        }
+      } else {
+        console.warn("User not found in localStorage");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -44,6 +94,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         clearUser,
         isSubmitting,
         setIsSubmitting,
+        updateUserScore,
       }}>
       {children}
     </UserContext.Provider>
