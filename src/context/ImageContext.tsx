@@ -1,4 +1,5 @@
 import { createContext, useContext, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 interface Image {
   _id: string;
@@ -20,7 +21,6 @@ interface ImageContextType {
   setNewImages: React.Dispatch<React.SetStateAction<Image[]>>;
   currentImage: Image[];
   setCurrentImage: React.Dispatch<React.SetStateAction<Image[]>>;
-  clearImages: () => void;
   usedImageIds: React.MutableRefObject<Set<string>>;
   fetchMoreImages: () => Promise<void>;
   handleNewGame: () => Promise<void>;
@@ -36,13 +36,6 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
   const [newImages, setNewImages] = useState<Image[]>([]);
   const [currentImage, setCurrentImage] = useState<Image[]>([]);
   const usedImageIds = useRef(new Set<string>());
-
-  const clearImages = () => {
-    console.log("clearImages");
-    setNewImages([]);
-    setCurrentImage([]);
-    usedImageIds.current.clear();
-  };
 
   const fetchMoreImages = async () => {
     const response = await fetch("http://localhost:3001/getrandomphotos");
@@ -68,7 +61,7 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
         usedImageIds.current.add(image._id);
       });
     } catch (error) {
-      console.error("Error fetching images:", error);
+      toast.error("Error fetching images, please refresh the page");
     }
   };
 
@@ -79,7 +72,6 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
         setCurrentImage,
         newImages,
         setNewImages,
-        clearImages,
         usedImageIds,
         fetchMoreImages,
         handleNewGame,
