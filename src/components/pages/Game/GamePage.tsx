@@ -7,6 +7,7 @@ import ImageContainer from "../../ImageContainers/ImageContainer";
 import AuthModal from "../../Modals/AuthModal";
 import GameOver from "./GameOver";
 import { AnimatePresence, motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 const GamePage = () => {
   const {
@@ -44,7 +45,7 @@ const GamePage = () => {
         await handleNewGame();
         setIsMounting(false);
       } catch (error) {
-        console.error("Error fetching images:", error);
+        toast.error("Error fetching images, please refresh the page");
       }
     };
     fetchDefaultImages();
@@ -57,7 +58,7 @@ const GamePage = () => {
       setIsGameOver(false);
       await handleNewGame();
     } catch (error) {
-      console.error("Error fetching images:", error);
+      toast.error("Error fetching images, please refresh the page");
     } finally {
       setIsMounting(false);
     }
