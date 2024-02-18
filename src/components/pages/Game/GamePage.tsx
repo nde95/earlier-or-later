@@ -93,7 +93,7 @@ const GamePage = () => {
       {/* game over screen */}
       {isGameOver && (
         <AnimatePresence>
-          <motion.div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-[#f7ede2]">
+          <motion.div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-40 bg-[#f7ede2]">
             <GameOver isMounting={isMounting} startNewGame={startNewGame} />
           </motion.div>
         </AnimatePresence>
@@ -114,10 +114,14 @@ const GamePage = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full">
+        <div className="w-full z-50">
           <div className="flex text-xs text-sky-500 cursor-pointer justify-center md:text-sm md:justify-end font-Poppins">
             <button onClick={() => handleOpenModal()}>
-              Log in to your account
+              {isGameOver ? (
+                <span>Create an account to save your score!</span>
+              ) : (
+                <span>Log in to your account</span>
+              )}
             </button>
           </div>
         </div>
