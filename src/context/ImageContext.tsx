@@ -23,6 +23,7 @@ interface ImageContextType {
   clearImages: () => void;
   usedImageIds: React.MutableRefObject<Set<string>>;
   fetchMoreImages: () => Promise<void>;
+  handleNewGame: () => Promise<void>;
 }
 
 interface ImageProviderProps {
@@ -37,6 +38,7 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
   const usedImageIds = useRef(new Set<string>());
 
   const clearImages = () => {
+    console.log("clearImages");
     setNewImages([]);
     setCurrentImage([]);
     usedImageIds.current.clear();
@@ -45,13 +47,30 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
   const fetchMoreImages = async () => {
     const response = await fetch("http://localhost:3001/getrandomphotos");
     const data = await response.json();
-
     data.forEach((image: Image) => {
       if (!usedImageIds.current.has(image._id)) {
         setNewImages(prevNewImages => [...prevNewImages, image]);
         usedImageIds.current.add(image._id);
       }
     });
+    console.timeEnd("fetchMoreImages");
+  };
+
+  const handleNewGame = async () => {
+    usedImageIds.current.clear();
+    try {
+      const response = await fetch("http://localhost:3001/getrandomphotos");
+      const data = await response.json();
+      const imageSlice = data.length - 1;
+      setNewImages(data.slice(0, imageSlice));
+      setCurrentImage([data[data.length - 1]]);
+
+      data.forEach((image: any) => {
+        usedImageIds.current.add(image._id);
+      });
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    }
   };
 
   return (
@@ -64,6 +83,7 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
         clearImages,
         usedImageIds,
         fetchMoreImages,
+        handleNewGame,
       }}>
       {children}
     </ImageContext.Provider>
