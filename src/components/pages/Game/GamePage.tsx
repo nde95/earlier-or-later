@@ -14,7 +14,6 @@ const GamePage = () => {
     setNewImages,
     currentImage,
     setCurrentImage,
-    usedImageIds,
     fetchMoreImages,
     handleNewGame,
   } = useImageContext();
@@ -42,15 +41,7 @@ const GamePage = () => {
 
     const fetchDefaultImages = async () => {
       try {
-        const response = await fetch("http://localhost:3001/getrandomphotos");
-        const data = await response.json();
-        const imageSlice = data.length - 1;
-        setNewImages(data.slice(0, imageSlice));
-        setCurrentImage([data[data.length - 1]]);
-
-        data.forEach((image: any) => {
-          usedImageIds.current.add(image._id);
-        });
+        await handleNewGame();
         setIsMounting(false);
       } catch (error) {
         console.error("Error fetching images:", error);

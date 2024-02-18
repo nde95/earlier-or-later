@@ -53,7 +53,6 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
         usedImageIds.current.add(image._id);
       }
     });
-    console.timeEnd("fetchMoreImages");
   };
 
   const handleNewGame = async () => {
