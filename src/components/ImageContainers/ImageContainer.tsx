@@ -76,7 +76,10 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ isCurrentImage }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}>
             <div className="bg-[#F6BD60] rounded-md text-xs text-center p-2 font-Nunito">
-              {comparisonImage.title} by {comparisonImage.realName}
+              {comparisonImage.title} by{" "}
+              {comparisonImage.realName === ""
+                ? comparisonImage.username
+                : comparisonImage.realName}
             </div>
             <div
               className="-mt-1 flex items-center justify-center h-64 overflow-hidden"

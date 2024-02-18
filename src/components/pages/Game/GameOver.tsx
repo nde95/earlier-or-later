@@ -41,7 +41,7 @@ const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
           </span>
           <div>
             <h1 className="bg-[#F6BD60] rounded-md text-center p-2 font-Nunito mb-4">
-              {lastImage.title} taken by {lastImage.realName}
+              {lastImage.title} uploaded by {lastImage.username}
             </h1>
           </div>
           <div className="flex justify-center h-80 overflow-hidden">
