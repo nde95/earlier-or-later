@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useImageContext } from "../../../context/ImageContext";
 import SkeletonImageContainer from "../../Skeleton/SkeletonImageContainer";
-import { ClipLoader } from "react-spinners";
 import { useUserContext } from "../../../context/UserContext";
 import ImageContainer from "../../ImageContainers/ImageContainer";
 import AuthModal from "../../Modals/AuthModal";
@@ -67,11 +66,7 @@ const GamePage = () => {
   const handleGuess = (guessType: string) => {
     const nextImage = newImages[0];
 
-    // also need to check if the user has a high score, if they do, update it
-    // player probably shouldn't be able to finish the database collection, but probably should have a way to end the game
-    // that kind of defeats the idea of a high score though, so maybe not
-
-    if (newImages.length < 6) {
+    if (!isLoading && newImages.length < 6) {
       setIsLoading(true);
       fetchMoreImages();
       setIsLoading(false);
@@ -95,12 +90,6 @@ const GamePage = () => {
 
   return (
     <div className="container px-10 my-auto flex flex-col items-center justify-between min-w-full h-screen">
-      {/* // loader functions as expected, but algo might be too fast to need it. */}
-      {isLoading && (
-        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-white/70 z-50">
-          <ClipLoader />
-        </div>
-      )}
       {isGameOver && (
         <AnimatePresence>
           <motion.div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-[#f7ede2]">
