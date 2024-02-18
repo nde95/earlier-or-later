@@ -90,6 +90,7 @@ const GamePage = () => {
 
   return (
     <div className="container px-10 my-auto flex flex-col items-center justify-between min-w-full h-screen">
+      {/* game over screen */}
       {isGameOver && (
         <AnimatePresence>
           <motion.div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-[#f7ede2]">
@@ -98,7 +99,7 @@ const GamePage = () => {
         </AnimatePresence>
       )}
 
-      {/* Score */}
+      {/* User details/login for unauth users */}
 
       {currentUser ? (
         <div className="w-full">
@@ -126,6 +127,7 @@ const GamePage = () => {
       <div>
         <h1 className="font-Poppins">Score: {userScore}</h1>
       </div>
+
       {/* Image container */}
       <div className="flex flex-col md:flex-row w-full md:justify-evenly items-center md:w-[900px] md:h-[400px]">
         <div className="mb-4 md:mb-0">
