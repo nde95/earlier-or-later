@@ -11,7 +11,7 @@ interface GameOverProps {
 
 const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
   const { newImages } = useImageContext();
-  const { currentUser, userScore } = useUserContext();
+  const { currentUser, userScore, updateUserScore } = useUserContext();
   const count = motionValue(0);
   const roundedScore = useTransform(count, Math.round);
   const lastImage = newImages[0];
@@ -20,6 +20,12 @@ const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
     const animation = animate(count, userScore, { duration: 1.5 });
 
     return animation.stop;
+  }, []);
+
+  useEffect(() => {
+    if (currentUser && userScore > currentUser?.highScore!) {
+      updateUserScore(userScore);
+    }
   }, []);
 
   return (
