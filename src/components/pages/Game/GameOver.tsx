@@ -1,5 +1,8 @@
+import { motion, motionValue, useTransform, animate } from "framer-motion";
 import { useImageContext } from "../../../context/ImageContext";
+import { useUserContext } from "../../../context/UserContext";
 import SkeletonGameOver from "../../Skeleton/SkeletonGameOver";
+import { useEffect } from "react";
 
 interface GameOverProps {
   isMounting: boolean;
@@ -8,7 +11,16 @@ interface GameOverProps {
 
 const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
   const { newImages } = useImageContext();
+  const { currentUser, userScore } = useUserContext();
+  const count = motionValue(0);
+  const roundedScore = useTransform(count, Math.round);
   const lastImage = newImages[0];
+
+  useEffect(() => {
+    const animation = animate(count, userScore, { duration: 1.5 });
+
+    return animation.stop;
+  }, []);
 
   return (
     <div className="container mx-auto h-full flex flex-col justify-center items-center text-center">
@@ -19,7 +31,7 @@ const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
       ) : (
         <div className="md:mt-8">
           <span className="text-lg font-semibold font-Nunito">
-            You guess incorrectly against this image:
+            You guessed incorrectly against this image:
           </span>
           <div>
             <h1 className="bg-[#F6BD60] rounded-md text-center p-2 font-Nunito mb-4">
@@ -60,9 +72,19 @@ const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
           <h1 className="text-3xl font-bold font-Nunito">Game Over!</h1>
         </div>
         <div className="font-semibold font-Poppins">
-          {/* Add conditional for 0 points, conditional for lower than high score, conditional for new high score */}
-          {/* extend conditional to the span to make the color change depending on the render */}
-          You scored: <span>100</span> points
+          {userScore === 0 ? (
+            <span>You didn't score any points :( Better luck next time!</span>
+          ) : userScore > 0 && userScore > currentUser?.highScore! ? (
+            <span>
+              You just set a new high score! You scored:{" "}
+              <motion.span>{roundedScore}</motion.span> points!
+            </span>
+          ) : (
+            <span>
+              You scored: <motion.span>{roundedScore}</motion.span> points this
+              time. Great job!
+            </span>
+          )}
         </div>
       </div>
     </div>
