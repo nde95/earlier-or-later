@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import toast from "react-hot-toast";
 
 interface User {
   username: string;
@@ -18,6 +19,9 @@ interface UserContextType {
   isSubmitting: boolean;
   setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
   updateUserScore: (highScore: number) => void;
+  setLeaderboard: React.Dispatch<React.SetStateAction<User[] | null>>;
+  leaderboard: User[] | null;
+  getLeaderboard: () => void;
 }
 
 interface UserProviderProps {
@@ -30,10 +34,31 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userScore, setUserScore] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [leaderboard, setLeaderboard] = useState<User[] | null>(null);
 
   const clearUser = () => {
     setCurrentUser(null);
     localStorage.removeItem("user");
+  };
+
+  const getLeaderboard = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/leaderboard", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch leaderboard");
+      }
+
+      const data = await response.json();
+      setLeaderboard(data);
+    } catch {
+      toast.error("Error fetching leaderboard");
+    }
   };
 
   const updateUserScore = async (highScore: number) => {
@@ -95,6 +120,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         isSubmitting,
         setIsSubmitting,
         updateUserScore,
+        getLeaderboard,
+        setLeaderboard,
+        leaderboard,
       }}>
       {children}
     </UserContext.Provider>
