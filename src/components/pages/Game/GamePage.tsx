@@ -3,7 +3,7 @@ import { useImageContext } from "../../../context/ImageContext";
 import SkeletonImageContainer from "../../Skeleton/SkeletonImageContainer";
 import { useUserContext } from "../../../context/UserContext";
 import ImageContainer from "../../ImageContainers/ImageContainer";
-import AuthModal from "../../Modals/AuthModal";
+import { AuthModal, LeaderboardModal } from "../../Modals";
 import GameOver from "./GameOver";
 import { AnimatePresence, motion } from "framer-motion";
 import toast from "react-hot-toast";

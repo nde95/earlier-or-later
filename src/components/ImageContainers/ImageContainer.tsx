@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useImageContext } from "../../context/ImageContext";
-import ImageModal from "../Modals/ImageModal";
+import { ImageModal } from "../Modals";
 import { useState } from "react";
 
 interface ImageContainerProps {
