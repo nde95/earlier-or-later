@@ -23,16 +23,14 @@ const GamePage = () => {
 
   const [isMounting, setIsMounting] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isLeaderboardModalOpen, setIsLeaderboardModalOpen] = useState(false);
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  const handleOpenAuthModal = () => setIsAuthModalOpen(true);
+  const handleCloseAuthModal = () => setIsAuthModalOpen(false);
+  const handleOpenLeaderboardModal = () => setIsLeaderboardModalOpen(true);
+  const handleCloseLeaderboardModal = () => setIsLeaderboardModalOpen(false);
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
@@ -109,14 +107,19 @@ const GamePage = () => {
           <div className="flex text-xs justify-center md:text-sm md:justify-end font-Poppins">
             {`High Score: ${currentUser.highScore} points`}
           </div>
-          <div className="flex text-xs text-sky-500 cursor-pointer justify-center md:text-sm md:justify-end font-Poppins">
+          <div className="flex text-xs text-sky-500 hover:underline cursor-pointer justify-center md:text-sm md:justify-end font-Poppins">
+            <button onClick={() => handleOpenLeaderboardModal()}>
+              Leaderboard
+            </button>
+          </div>
+          <div className="flex text-xs text-sky-500 hover:underline cursor-pointer justify-center md:text-sm md:justify-end font-Poppins">
             <button onClick={() => clearUser()}>Log out</button>
           </div>
         </div>
       ) : (
         <div className="w-full z-50">
           <div className="flex text-xs text-sky-500 cursor-pointer justify-center md:text-sm md:justify-end font-Poppins">
-            <button onClick={() => handleOpenModal()}>
+            <button onClick={() => handleOpenAuthModal()}>
               {isGameOver ? (
                 <span>Create an account to save your score!</span>
               ) : (
@@ -171,7 +174,11 @@ const GamePage = () => {
         </div>
       </div>
       <div className="py-5"></div>
-      <AuthModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <AuthModal isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />
+      <LeaderboardModal
+        isOpen={isLeaderboardModalOpen}
+        onClose={handleCloseLeaderboardModal}
+      />
     </div>
   );
 };
