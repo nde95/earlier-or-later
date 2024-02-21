@@ -39,8 +39,11 @@ const GamePage = () => {
 
     const fetchDefaultImages = async () => {
       try {
-        await handleNewGame();
-        setIsMounting(false);
+        const response = await handleNewGame();
+
+        if (response) {
+          setIsMounting(false);
+        }
       } catch (error) {
         toast.error("Error fetching images, please refresh the page");
       }

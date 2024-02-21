@@ -23,7 +23,7 @@ interface ImageContextType {
   setCurrentImage: React.Dispatch<React.SetStateAction<Image[]>>;
   usedImageIds: React.MutableRefObject<Set<string>>;
   fetchMoreImages: () => Promise<void>;
-  handleNewGame: () => Promise<void>;
+  handleNewGame: () => Promise<boolean>;
 }
 
 interface ImageProviderProps {
@@ -60,6 +60,8 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
       data.forEach((image: any) => {
         usedImageIds.current.add(image._id);
       });
+
+      return data;
     } catch (error) {
       toast.error("Error fetching images, please refresh the page");
     }
