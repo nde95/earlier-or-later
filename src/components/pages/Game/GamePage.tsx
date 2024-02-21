@@ -157,6 +157,10 @@ const GamePage = () => {
           )}
         </div>
       </div>
+
+      <p className="font-Nunito text-xs md:text-lg">
+        Was the second image taken...
+      </p>
       {/* Buttons container*/}
       <div className="flex justify-center gap-10 items-center">
         {/* Buttons container */}
