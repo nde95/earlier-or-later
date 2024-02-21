@@ -11,15 +11,15 @@ const HowTo = () => {
       <ul className="list-none ml-6 mb-4">
         <li className="mb-4">
           In this game, you will be shown two images side by side (or on top of
-          each other on mobile) and you have to guess if the image with the
-          visible date was originally taken on an earlier or later date than the
-          comparison image using the buttons on the bottom of the screen and
-          your own intuition. Get it right, and earn 100 points, get it wrong
-          and the game is <span className="italic font-semibold">over!</span>
+          each other on mobile) and you have to guess if the second image was
+          taken on an earlier or later date than the first image. This can be
+          done using your own intuition, and the buttons on the bottom of the
+          screen. Get it right, and earn 100 points, get it wrong and the game
+          is <span className="italic font-semibold">over!</span>
         </li>
         <li className="mb-4 flex items-center justify-center">
           <img
-            src="/tutorial.PNG"
+            src="/tuto2.PNG"
             alt="tutorial image"
             width={500}
             height={300}
