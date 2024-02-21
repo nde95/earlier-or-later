@@ -1,6 +1,6 @@
 # Earlier or Later Game
 
-![Game Screenshot](https://imgur.com/a/S0pYssc.png)
+![Game Screenshot](https://i.imgur.com/FS0MTyS.png)
 
 ## Description
 
@@ -19,3 +19,24 @@
 - React Hook Form
 - React Hot Toast
 - React Spinners
+
+## Contributing or running locally.
+
+The game can be played at the current link to the website, but if you want to contribute to the project all you need to do is run a few commands:
+
+First, clone the repo with
+```
+git clone https://github.com/nde95/earlier-or-later
+```
+
+Second, you will need to install the packages and dependancies with
+```
+npm install
+```
+
+Third, all you need to do is run
+```
+npm run dev
+```
+
+And you're all set. 
