@@ -85,10 +85,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       const storedUser = localStorage.getItem("user");
 
       if (storedUser) {
-        // Parse the stored user object if it exists
         const user = JSON.parse(storedUser);
-
-        // Create a new object with the updated highScore and spread the rest of the properties
         const updatedUser = {
           ...user,
           highScore: updatedHighScore,
@@ -99,7 +96,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
         if (currentUser) {
           currentUser.highScore = updatedHighScore;
-          setCurrentUser(currentUser); // Assuming setCurrentUser updates your state
+          setCurrentUser(currentUser); 
         }
       } else {
         console.warn("User not found in localStorage");
