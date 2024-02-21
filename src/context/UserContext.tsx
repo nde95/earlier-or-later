@@ -43,12 +43,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const getLeaderboard = async () => {
     try {
-      const response = await fetch("http://localhost:3001/leaderboard", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "https://earlier-or-later-api.onrender.com/leaderboard",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch leaderboard");
@@ -63,17 +66,20 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const updateUserScore = async (highScore: number) => {
     try {
-      const response = await fetch(`http://localhost:3001/updatehighscore`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Bearer: `Bearer ${currentUser?.accessToken}`,
-        },
-        body: JSON.stringify({
-          username: currentUser?.username,
-          highScore: highScore,
-        }),
-      });
+      const response = await fetch(
+        `https://earlier-or-later-api.onrender.com/updatehighscore`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Bearer: `Bearer ${currentUser?.accessToken}`,
+          },
+          body: JSON.stringify({
+            username: currentUser?.username,
+            highScore: highScore,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to update user score");
@@ -85,10 +91,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       const storedUser = localStorage.getItem("user");
 
       if (storedUser) {
-        // Parse the stored user object if it exists
         const user = JSON.parse(storedUser);
 
-        // Create a new object with the updated highScore and spread the rest of the properties
         const updatedUser = {
           ...user,
           highScore: updatedHighScore,
@@ -99,7 +103,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
         if (currentUser) {
           currentUser.highScore = updatedHighScore;
-          setCurrentUser(currentUser); // Assuming setCurrentUser updates your state
+          setCurrentUser(currentUser);
         }
       } else {
         console.warn("User not found in localStorage");

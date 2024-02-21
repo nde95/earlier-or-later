@@ -38,13 +38,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
     const pendingToastId = toast.loading("Submitting...");
     setIsSubmitting(true);
     try {
-      const response = await fetch("http://localhost:3001/register", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "https://earlier-or-later-api.onrender.com/register",
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.ok) {
         toast.dismiss(pendingToastId);

@@ -38,7 +38,9 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
   const usedImageIds = useRef(new Set<string>());
 
   const fetchMoreImages = async () => {
-    const response = await fetch("http://localhost:3001/getrandomphotos");
+    const response = await fetch(
+      "https://earlier-or-later-api.onrender.com/getrandomphotos"
+    );
     const data = await response.json();
     data.forEach((image: Image) => {
       if (!usedImageIds.current.has(image._id)) {
@@ -51,7 +53,9 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
   const handleNewGame = async () => {
     usedImageIds.current.clear();
     try {
-      const response = await fetch("http://localhost:3001/getrandomphotos");
+      const response = await fetch(
+        "https://earlier-or-later-api.onrender.com/getrandomphotos"
+      );
       const data = await response.json();
       const imageSlice = data.length - 1;
       setNewImages(data.slice(0, imageSlice));

@@ -24,13 +24,16 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
     const pendingToastId = toast.loading("Logging in...");
     setIsSubmitting(true);
     try {
-      const response = await fetch("http://localhost:3001/login", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "https://earlier-or-later-api.onrender.com/login",
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (response.ok) {
         const user = await response.json();
         localStorage.setItem("user", JSON.stringify(user));
