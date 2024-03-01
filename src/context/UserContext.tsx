@@ -5,9 +5,8 @@ interface User {
   username: string;
   email: string;
   password: string;
-  _id: string;
+  id: number;
   highscore: number;
-  accessToken: string;
 }
 
 interface UserContextType {
@@ -64,17 +63,16 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
-  const updateUserScore = async (highScore: number) => {
+  const updateUserScore = async (highscore: number) => {
     try {
       const response = await fetch(`http://localhost:3001/updatehighscore`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Bearer: `Bearer ${currentUser?.accessToken}`,
         },
         body: JSON.stringify({
           username: currentUser?.username,
-          highScore: highScore,
+          highscore: highscore,
         }),
       });
 
