@@ -43,12 +43,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const getLeaderboard = async () => {
     try {
-      const response = await fetch("http://localhost:3001/leaderboard", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "http://localhost:8000/api/users/leaderboard",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch leaderboard");
@@ -96,7 +99,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
         if (currentUser) {
           currentUser.highScore = updatedHighScore;
-          setCurrentUser(currentUser); 
+          setCurrentUser(currentUser);
         }
       } else {
         console.warn("User not found in localStorage");

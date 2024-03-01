@@ -2,18 +2,18 @@ import { createContext, useContext, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 interface Image {
-  _id: string;
-  userId: string;
-  imageId: string;
-  takenDate: Date;
+  id: number;
+  image_id: string;
+  user_id: string;
+  taken_date: Date;
   username: string;
-  realName: string;
+  real_name: string;
   title: string;
   format: string;
-  picSecret: string;
+  image_secret: string;
   url: string;
-  pageType: string;
-  serverId: string;
+  page_type: string;
+  server_id: string;
 }
 
 interface ImageContextType {
@@ -21,7 +21,7 @@ interface ImageContextType {
   setNewImages: React.Dispatch<React.SetStateAction<Image[]>>;
   currentImage: Image[];
   setCurrentImage: React.Dispatch<React.SetStateAction<Image[]>>;
-  usedImageIds: React.MutableRefObject<Set<string>>;
+  usedImageIds: React.MutableRefObject<Set<number>>;
   fetchMoreImages: () => Promise<void>;
   handleNewGame: () => Promise<boolean>;
 }
@@ -35,15 +35,15 @@ const ImageContext = createContext<ImageContextType | undefined>(undefined);
 export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
   const [newImages, setNewImages] = useState<Image[]>([]);
   const [currentImage, setCurrentImage] = useState<Image[]>([]);
-  const usedImageIds = useRef(new Set<string>());
+  const usedImageIds = useRef(new Set<number>());
 
   const fetchMoreImages = async () => {
-    const response = await fetch("http://localhost:3001/getrandomphotos");
+    const response = await fetch("http://localhost:8000/api/photos");
     const data = await response.json();
     data.forEach((image: Image) => {
-      if (!usedImageIds.current.has(image._id)) {
+      if (!usedImageIds.current.has(image.id)) {
         setNewImages(prevNewImages => [...prevNewImages, image]);
-        usedImageIds.current.add(image._id);
+        usedImageIds.current.add(image.id);
       }
     });
   };
@@ -51,14 +51,14 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
   const handleNewGame = async () => {
     usedImageIds.current.clear();
     try {
-      const response = await fetch("http://localhost:3001/getrandomphotos");
+      const response = await fetch("http://localhost:8000/api/photos");
       const data = await response.json();
       const imageSlice = data.length - 1;
       setNewImages(data.slice(0, imageSlice));
       setCurrentImage([data[data.length - 1]]);
 
       data.forEach((image: any) => {
-        usedImageIds.current.add(image._id);
+        usedImageIds.current.add(image.id);
       });
 
       return data;

@@ -75,11 +75,11 @@ const GamePage = () => {
 
     if (
       (guessType === "earlier" &&
-        nextImage.takenDate < currentImage[0].takenDate) ||
-      nextImage.takenDate === currentImage[0].takenDate ||
+        nextImage.taken_date < currentImage[0].taken_date) ||
+      nextImage.taken_date === currentImage[0].taken_date ||
       (guessType === "later" &&
-        nextImage.takenDate > currentImage[0].takenDate) ||
-      nextImage.takenDate === currentImage[0].takenDate
+        nextImage.taken_date > currentImage[0].taken_date) ||
+      nextImage.taken_date === currentImage[0].taken_date
     ) {
       setUserScore(prevScore => prevScore + 100);
       setCurrentImage(() => [nextImage]);
