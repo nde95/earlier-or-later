@@ -108,7 +108,7 @@ const GamePage = () => {
             {`Hello, ${currentUser.username}!`}
           </div>
           <div className="flex text-xs justify-center md:text-sm md:justify-end font-Poppins">
-            {`High Score: ${currentUser.highScore} points`}
+            {`High Score: ${currentUser.highscore} points`}
           </div>
           <div className="flex text-xs text-sky-500 hover:underline cursor-pointer justify-center md:text-sm md:justify-end font-Poppins">
             <button onClick={() => handleOpenLeaderboardModal()}>

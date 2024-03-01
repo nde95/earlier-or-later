@@ -91,14 +91,14 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         const user = JSON.parse(storedUser);
         const updatedUser = {
           ...user,
-          highScore: updatedHighScore,
+          highscore: updatedHighScore,
         };
 
         // Store the updated user model in localStorage
         localStorage.setItem("user", JSON.stringify(updatedUser));
 
         if (currentUser) {
-          currentUser.highScore = updatedHighScore;
+          currentUser.highscore = updatedHighScore;
           setCurrentUser(currentUser);
         }
       } else {
