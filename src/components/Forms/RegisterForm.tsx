@@ -49,8 +49,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
       if (response.ok) {
         toast.dismiss(pendingToastId);
         // user is created, so sign them in immediately, no need to make them log in immediately after registering
-        const user = await response.json();
+        const credentials = await response.json();
+        const user = {
+          username: credentials.username,
+          highscore: credentials.highscore,
+        };
         localStorage.setItem("user", JSON.stringify(user));
+        // @ts-ignore
         setCurrentUser(user);
         toast.success("Registration successful!");
         // close the modal passed from the parent component

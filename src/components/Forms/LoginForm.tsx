@@ -32,8 +32,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
         },
       });
       if (response.ok) {
-        const user = await response.json();
+        const credentials = await response.json();
+        const user = {
+          username: credentials.username,
+          highscore: credentials.highscore,
+        };
+
         localStorage.setItem("user", JSON.stringify(user));
+        // @ts-ignore
         setCurrentUser(user);
         toast.dismiss(pendingToastId);
         toast.success("Login successful!");
