@@ -23,7 +23,7 @@ const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
   }, []);
 
   useEffect(() => {
-    if (currentUser && userScore > currentUser?.highScore!) {
+    if (currentUser && userScore > currentUser?.highscore!) {
       updateUserScore(userScore);
     }
   }, []);
@@ -80,7 +80,7 @@ const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
         <div className="font-semibold font-Poppins">
           {userScore === 0 ? (
             <span>You didn't score any points :( Better luck next time!</span>
-          ) : userScore > 0 && userScore > currentUser?.highScore! ? (
+          ) : userScore > 0 && userScore > currentUser?.highscore! ? (
             <span>
               You just set a new high score! You scored:{" "}
               <motion.span>{roundedScore}</motion.span> points!

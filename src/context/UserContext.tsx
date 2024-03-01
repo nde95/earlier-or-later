@@ -65,23 +65,26 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const updateUserScore = async (highscore: number) => {
     try {
-      const response = await fetch(`http://localhost:3001/updatehighscore`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: currentUser?.username,
-          highscore: highscore,
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:8000/api/users/highscore`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: currentUser!.username,
+            highscore: highscore,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to update user score");
       }
 
       const data = await response.json();
-      const updatedHighScore = data.highScore;
+      const updatedHighScore = data.highscore;
 
       const storedUser = localStorage.getItem("user");
 
