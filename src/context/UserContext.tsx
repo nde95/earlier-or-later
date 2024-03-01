@@ -6,7 +6,7 @@ interface User {
   email: string;
   password: string;
   _id: string;
-  highScore: number;
+  highscore: number;
   accessToken: string;
 }
 

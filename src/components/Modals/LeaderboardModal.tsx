@@ -30,7 +30,7 @@ const LeaderboardModal: React.FC<ImageModalProps> = ({ isOpen, onClose }) => {
               <div className="bg-slate-200 rounded-md px-1">
                 <p className="font-semibold">Rank {index + 1}:</p>
                 <p className="mb-5">
-                  {user.username}, {user.highScore} points
+                  {user.username}, {user.highscore} points
                 </p>
               </div>
             </div>
