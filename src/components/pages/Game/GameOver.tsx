@@ -23,7 +23,7 @@ const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
   }, []);
 
   useEffect(() => {
-    if (currentUser && userScore > currentUser?.highScore!) {
+    if (currentUser && userScore > currentUser?.highscore!) {
       updateUserScore(userScore);
     }
   }, []);
@@ -46,7 +46,7 @@ const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
           </div>
           <div className="flex justify-center h-80 overflow-hidden">
             <img
-              src={`https://live.staticflickr.com/${lastImage.serverId}/${lastImage._id}_${lastImage.picSecret}_b.jpg`}
+              src={`https://live.staticflickr.com/${lastImage.server_id}/${lastImage.image_id}_${lastImage.image_secret}_b.jpg`}
               alt={lastImage.title}
               className="rounded-md shadow-xl"
             />
@@ -55,7 +55,7 @@ const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
             <span className="font-semibold font-Nunito">
               Which was taken on:
             </span>{" "}
-            {lastImage.takenDate.toString().substring(0, 10)}
+            {lastImage.taken_date.toString()}
           </div>
           <div className="flex flex-col justify-center items-center mt-5 gap-3">
             <a
@@ -80,7 +80,7 @@ const GameOver: React.FC<GameOverProps> = ({ isMounting, startNewGame }) => {
         <div className="font-semibold font-Poppins">
           {userScore === 0 ? (
             <span>You didn't score any points :( Better luck next time!</span>
-          ) : userScore > 0 && userScore > currentUser?.highScore! ? (
+          ) : userScore > 0 && userScore > currentUser?.highscore! ? (
             <span>
               You just set a new high score! You scored:{" "}
               <motion.span>{roundedScore}</motion.span> points!

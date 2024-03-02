@@ -24,7 +24,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
     const pendingToastId = toast.loading("Logging in...");
     setIsSubmitting(true);
     try {
-      const response = await fetch("http://localhost:3001/login", {
+      const response = await fetch("http://localhost:8000/api/users/login", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -32,8 +32,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
         },
       });
       if (response.ok) {
-        const user = await response.json();
+        const credentials = await response.json();
+        const user = {
+          username: credentials.username,
+          highscore: credentials.highscore,
+        };
+
         localStorage.setItem("user", JSON.stringify(user));
+        // @ts-ignore
         setCurrentUser(user);
         toast.dismiss(pendingToastId);
         toast.success("Login successful!");

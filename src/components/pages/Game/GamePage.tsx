@@ -75,11 +75,11 @@ const GamePage = () => {
 
     if (
       (guessType === "earlier" &&
-        nextImage.takenDate < currentImage[0].takenDate) ||
-      nextImage.takenDate === currentImage[0].takenDate ||
+        nextImage.taken_date < currentImage[0].taken_date) ||
+      nextImage.taken_date === currentImage[0].taken_date ||
       (guessType === "later" &&
-        nextImage.takenDate > currentImage[0].takenDate) ||
-      nextImage.takenDate === currentImage[0].takenDate
+        nextImage.taken_date > currentImage[0].taken_date) ||
+      nextImage.taken_date === currentImage[0].taken_date
     ) {
       setUserScore(prevScore => prevScore + 100);
       setCurrentImage(() => [nextImage]);
@@ -108,7 +108,7 @@ const GamePage = () => {
             {`Hello, ${currentUser.username}!`}
           </div>
           <div className="flex text-xs justify-center md:text-sm md:justify-end font-Poppins">
-            {`High Score: ${currentUser.highScore} points`}
+            {`High Score: ${currentUser.highscore} points`}
           </div>
           <div className="flex text-xs text-sky-500 hover:underline cursor-pointer justify-center md:text-sm md:justify-end font-Poppins">
             <button onClick={() => handleOpenLeaderboardModal()}>

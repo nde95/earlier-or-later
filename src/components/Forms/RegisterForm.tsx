@@ -8,7 +8,7 @@ type FormValues = {
   email: string;
   password: string;
   confirmPassword: string;
-  highScore: number;
+  highscore: number;
 };
 
 interface RegisterFormProps {
@@ -31,14 +31,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
     ...data
   }) => {
     if (userScore > 0) {
-      data.highScore = userScore;
+      data.highscore = userScore;
     } else {
-      data.highScore = 0;
+      data.highscore = 0;
     }
     const pendingToastId = toast.loading("Submitting...");
     setIsSubmitting(true);
     try {
-      const response = await fetch("http://localhost:3001/register", {
+      const response = await fetch("http://localhost:8000/api/users/register", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -49,8 +49,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
       if (response.ok) {
         toast.dismiss(pendingToastId);
         // user is created, so sign them in immediately, no need to make them log in immediately after registering
-        const user = await response.json();
+        const credentials = await response.json();
+        const user = {
+          username: credentials.username,
+          highscore: credentials.highscore,
+        };
         localStorage.setItem("user", JSON.stringify(user));
+        // @ts-ignore
         setCurrentUser(user);
         toast.success("Registration successful!");
         // close the modal passed from the parent component

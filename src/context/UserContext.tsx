@@ -5,9 +5,8 @@ interface User {
   username: string;
   email: string;
   password: string;
-  _id: string;
-  highScore: number;
-  accessToken: string;
+  id: number;
+  highscore: number;
 }
 
 interface UserContextType {
@@ -43,12 +42,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const getLeaderboard = async () => {
     try {
-      const response = await fetch("http://localhost:3001/leaderboard", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "http://localhost:8000/api/users/leaderboard",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch leaderboard");
@@ -61,26 +63,28 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   };
 
-  const updateUserScore = async (highScore: number) => {
+  const updateUserScore = async (highscore: number) => {
     try {
-      const response = await fetch(`http://localhost:3001/updatehighscore`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Bearer: `Bearer ${currentUser?.accessToken}`,
-        },
-        body: JSON.stringify({
-          username: currentUser?.username,
-          highScore: highScore,
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:8000/api/users/highscore`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: currentUser!.username,
+            highscore: highscore,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to update user score");
       }
 
       const data = await response.json();
-      const updatedHighScore = data.highScore;
+      const updatedHighScore = data.highscore;
 
       const storedUser = localStorage.getItem("user");
 
@@ -88,15 +92,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         const user = JSON.parse(storedUser);
         const updatedUser = {
           ...user,
-          highScore: updatedHighScore,
+          highscore: updatedHighScore,
         };
 
         // Store the updated user model in localStorage
         localStorage.setItem("user", JSON.stringify(updatedUser));
 
         if (currentUser) {
-          currentUser.highScore = updatedHighScore;
-          setCurrentUser(currentUser); 
+          currentUser.highscore = updatedHighScore;
+          setCurrentUser(currentUser);
         }
       } else {
         console.warn("User not found in localStorage");
