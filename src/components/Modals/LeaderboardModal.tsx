@@ -27,7 +27,7 @@ const LeaderboardModal: React.FC<ImageModalProps> = ({ isOpen, onClose }) => {
         ) : (
           leaderboard.map((user: any, index: number) => (
             <div key={index}>
-              <div className="bg-slate-200 rounded-md px-1">
+              <div className="bg-slate-200 rounded-md px-1 shadow-md">
                 <p className="font-semibold">Rank {index + 1}:</p>
                 <p className="mb-5">
                   {user.username}, {user.highscore} points
